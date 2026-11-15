@@ -26,37 +26,67 @@ https://uianes.github.io/pascalblocks/
 
 ## ✨ Principais Funcionalidades
 
-### 🧱 Programação em Blocos
-- Construção visual de algoritmos em Pascal
-- Blocos para:
-  - Estrutura de programa (`program`, `uses`, `var`, `begin`, `end`)
-  - Entrada e saída (`readln`, `writeln`)
-  - Operadores lógicos e aritméticos
-  - Estruturas condicionais (`if`, `else`, `else if`)
-  - Estruturas de repetição (`while`, `repeat until`, `for`)
-  - Estrutura `case of`
+### 🧱 Programação em Blocos (estruturados)
+- Blocos **aninhados**: `if`, `for`, `while`, `repeat`, `case`, `procedure` e `function` têm encaixes internos — não é preciso montar `begin`, `end` e `;` à mão, o código gerado é sempre válido
+- Campos editáveis direto no bloco (sem janelas de `prompt`), com **validação em tempo real** e autocompletar de variáveis
+- `writeln`/`write` com partes de **texto** e **valor**, incluindo formatação (`media:0:2`) — sem precisar brigar com apóstrofos
+- Bloco **perguntar e ler** (`write` + `readln`), `inc`/`dec`, `case` com opções, sub-rotinas com parâmetros e variáveis locais, `break`/`continue`/`exit`, cores e tela (unit CRT), comentários e bloco de **código Pascal livre**
+- Operadores e funções (`div`, `mod`, `and`, `sqrt`, `length`, `copy`...) inseridos com um clique no campo selecionado
+- Arrastar e soltar (mouse ou toque), duplicar, copiar/colar, desfazer/refazer e navegação por teclado
 
-### 🔀 Drag and Drop
-- Arraste blocos para o workspace
-- Reordene blocos livremente
-- Exclua blocos arrastando para a **lixeira**
+### ⌨️ Editor de Código
+- Aba **Código** para escrever Pascal livremente, com realce de sintaxe, números de linha e erros marcados enquanto se digita
+- **Conversão nos dois sentidos**: blocos → código e código → blocos
 
-### 🧠 Validação Semântica
-- Identifica erros comuns de iniciantes, como:
-  - `end;` antes de `else`
-  - Parênteses ou aspas desbalanceadas
-  - Uso de variáveis não declaradas
-- Mensagens pedagógicas, voltadas ao aprendizado
+### ⚙️ Compilador + Interpretador Pascal (100% no navegador)
+- Analisador léxico, sintático e **semântico** (verificação de tipos) com mensagens e dicas em português
+- Tipos: `integer`, `real`, `boolean`, `char`, `string`, arrays (matrizes, índices `char`, dinâmicos), `record`, enumerações, conjuntos (`in`)
+- `procedure`/`function` com parâmetros por valor, `var` e `const`, recursão e rotinas aninhadas
+- Saída formatada idêntica ao Free Pascal (`writeln(x)` real em notação científica, `x:0:2`, `TRUE/FALSE`)
+- `readln`/`read` interativos no console, erros de execução amigáveis (divisão por zero, índice fora dos limites, entrada inválida...)
+- Funções da unit CRT e SysUtils mais usadas (`clrscr`, `textcolor`, `delay`, `readkey`, `IntToStr`, `StrToInt`, `UpperCase`...)
 
-### ▶️ Simulador Passo a Passo
-- Execução controlada do algoritmo
-- Visualização do estado das variáveis
-- Saída simulada (`writeln`)
-- Ideal para **explicação em sala de aula**
+### 👣 Passo a Passo e Depuração
+- Executa uma linha/bloco por vez, destacando o bloco e a linha atuais
+- Painel dividido **Console & Variáveis** simultâneos para acompanhar saída, entrada (`readln`) e memória ao mesmo tempo
+- Tabela de **variáveis** (inclusive locais de cada rotina), destacando o valor anterior e o novo (`anterior → novo`) a cada alteração
 
-### 💾 Exportação Real de Código
-- Geração e download de arquivo **`.pas`**
-- Código Pascal válido, compilável em FreePascal / Turbo Pascal
+### 📚 Exemplos Didáticos e Guia Integrado
+- **Exemplos comentados** (do básico a `record` e cores CRT) com explicação passo a passo, conceitos abordados, dicas e desafios práticos
+- **📖 Guia & Docs** completo dentro da própria aplicação: explicação de todos os blocos, tipos, operadores, erros comuns e catálogo pesquisável com mais de 45 funções/procedimentos padrão do Pascal
+
+### 💾 Arquivos e Área de Trabalho
+- Botão **🗑️ Limpar tudo** no topo (com suporte a desfazer via `Ctrl+Z`)
+- Projetos `.pas_block`, download do `.pas`, abertura de arquivos `.pas` (convertidos em blocos) e **link de compartilhamento**
+- Salvamento automático no navegador; arquivos `.pas_block` da versão antiga continuam sendo importados
+
+---
+
+## 🧑‍💻 Desenvolvimento
+
+Não há etapa de build: é HTML + CSS + JavaScript (módulos ES). Para rodar localmente, sirva a pasta com qualquer servidor estático:
+
+```bash
+python3 -m http.server 8000
+# abra http://localhost:8000
+```
+
+Testes do compilador/interpretador e da conversão blocos ↔ código:
+
+```bash
+node tests/run.mjs
+```
+
+Estrutura:
+
+```
+js/pascal/     lexer, parser, analisador semântico, interpretador
+js/blocks/     definições dos blocos, editor visual, gerador de código, conversão código → blocos
+js/ui/         editor de código, console, realce de sintaxe
+js/examples.js exemplos prontos com guia didático
+js/docs.js     documentação completa das funções, blocos e erros comuns
+js/app.js      aplicação (modos, execução, arquivos, documentação, atalhos)
+```
 
 ---
 
@@ -116,7 +146,7 @@ Sendo especialmente útil em cenários onde estudantes apresentam **dificuldades
 
 - HTML5
 - CSS3
-- JavaScript (Vanilla)
+- JavaScript (Vanilla, módulos ES, sem dependências)
 - Arquitetura **100% client-side** (sem dependência de servidor)
 
 ---

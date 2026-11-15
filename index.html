@@ -1,223 +1,162 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" type="text/css" href="css/estilo.css" />
-    <link rel="stylesheet" type="text/css" href="css/blocosPrograma.css" />
-    <link rel="stylesheet" type="text/css" href="css/blocosVariaveis.css" />
-    <link rel="stylesheet" type="text/css" href="css/blocosOperadores.css" />
-    <link rel="stylesheet" type="text/css" href="css/blocosInOut.css" />
-    <link rel="stylesheet" type="text/css" href="css/blocosFuncoes.css" />
-    <link rel="stylesheet" type="text/css" href="css/blocosCondicionais.css" />
-    <link rel="stylesheet" type="text/css" href="css/blocosRepeticao.css" />
+    <meta name="description" content="PascalBlocks: aprenda Pascal com blocos, escreva código e execute direto no navegador." />
     <title>PascalBlocks</title>
+    <link rel="icon" href="img/pascalblocks.png" />
+    <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-    <div id="app">
-      <div id="TextoCentral">
-        <img src="img/pascalblocks.png" alt="PascalBlocks" id="logo" />
-        <div id="acoesTopo">
-          <div
-            id="trashBin"
-            title="Arraste um bloco aqui para apagar"
-            aria-label="Lixeira"
-          >
-            🗑️
-          </div>
-          <div class="undo-redo-group">
-            <b id="btnUndo" class="disabled" title="Desfazer (Ctrl+Z)" aria-label="Desfazer" aria-disabled="true">↩️</b>
-            <b id="btnRedo" class="disabled" title="Refazer (Ctrl+Y)" aria-label="Refazer" aria-disabled="true">↪️</b>
-          </div>
-          <b id="btn">Ver Código!</b>
-          <b id="btnLimpar">Limpar</b>
-          <b id="btnSimular">Simulador</b>
-          <b id="btnValidar">Validar</b>
-          <div class="dropdown">
-            <b id="btnAcoes">Ações</b>
-            <div class="dropdown-content" id="dropdownAcoes">
-              <b id="btnDownload">Baixar código</b>
-              <b id="btnExport">Exportar</b>
-              <b id="btnImport">Importar</b>
-            </div>
-          </div>
-        </div>
-        <input
-          type="file"
-          id="importFileInput"
-          accept=".pas_block"
-          style="display: none"
-        />
-        <hr />
-      </div>
-      <div id="content">
-        <div id="lateral">
-          <div class="sidebar-section">
-            <h5 class="sidebar-title">Programa</h5>
-            <p id="program" draggable="true"><b>Program</b></p>
-            <p id="usescrt" draggable="true"><b>Uses CRT;</b></p>
-            <p id="begin" draggable="true"><b>Begin</b></p>
-            <p id="end0" draggable="true"><b>End</b></p>
-            <p id="end1" draggable="true"><b>End;</b></p>
-            <p id="end2" draggable="true"><b>End.</b></p>
-          </div>
-          <div class="sidebar-section">
-            <h5 class="sidebar-title">Variáveis</h5>
-            <p id="variaveis" draggable="true"><b>Var</b></p>
-            <p id="novavar" draggable="true"><b>Nova Variável</b></p>
-            <p id="novovalorvar" draggable="true"><b>Novo valor para var</b></p>
-          </div>
-          <div class="sidebar-section">
-            <h5 class="sidebar-title">Entrada e Saída</h5>
-            <p id="saida" draggable="true"><b>WRITELN</b></p>
-            <p id="saidacomvar" draggable="true">
-              <b>WRITELN COM VARIÁVEIS</b>
-            </p>
-            <p id="entrada" draggable="true"><b>READLN</b></p>
-          </div>
-          <div class="sidebar-section">
-            <h5 class="sidebar-title">Operadores</h5>
-            <div class="operator-grid">
-              <p id="entradaDados" draggable="true"><b> := </b></p>
-              <p id="igualdade" draggable="true"><b> = </b></p>
-              <p id="diferenca" draggable="true"><b> &#60; &#62; </b></p>
-              <p id="menor" draggable="true"><b> &#60; </b></p>
-              <p id="maior" draggable="true"><b> &#62; </b></p>
-              <p id="nao" draggable="true"><b>NOT</b></p>
-              <p id="ee" draggable="true"><b>AND</b></p>
-              <p id="ou" draggable="true"><b>OR</b></p>
-              <p id="dv" draggable="true"><b>DIV</b></p>
-              <p id="mod" draggable="true"><b>MOD</b></p>
-              <p id="parentese1" draggable="true"><b> ( </b></p>
-              <p id="parentese2" draggable="true"><b> ) </b></p>
-              <p id="aspas" draggable="true"><b> " </b></p>
-              <p id="apostrofe" draggable="true"><b> ' </b></p>
-              <p id="pontoevirgula" draggable="true"><b> ; </b></p>
-              <p id="virgula" draggable="true"><b> , </b></p>
-            </div>
-          </div>
-          <div class="sidebar-section">
-            <h5 class="sidebar-title">Funções</h5>
-            <p id="clrscr" draggable="true"><b>CLRSCR;</b></p>
-            <p id="sqr" draggable="true"><b> SQR( ); </b></p>
-            <p id="sqrt" draggable="true"><b> SQRT( ); </b></p>
-          </div>
-          <div class="sidebar-section">
-            <h5 class="sidebar-title">Estruturas Condicionais</h5>
-            <p id="condicionalsimples" draggable="true"><b>IF() THEN</b></p>
-            <p id="condicionalsenao" draggable="true"><b>ELSE</b></p>
-            <p id="senaose" draggable="true"><b>ELSE IF() THEN</b></p>
-            <p id="condicionalcase" draggable="true"><b>CASE seletor OF</b></p>
-            <p id="caseopcao" draggable="true"><b>Novo item CASE</b></p>
-          </div>
-          <div class="sidebar-section">
-            <h5 class="sidebar-title">Estruturas de Repetição</h5>
-            <p id="enquanto" draggable="true"><b>WHILE( ) DO</b></p>
-            <p id="repita" draggable="true"><b>REPEAT</b></p>
-            <p id="until" draggable="true"><b>UNTIL( )</b></p>
-            <p id="para" draggable="true"><b>FOR TO DO</b></p>
-          </div>
-        </div>
-        <div id="meio">
-          <div id="blocos1">
-            <div class="workspace-placeholder">
-              🖱️ Clique ou arraste o bloco "Program" para iniciar
-            </div>
-          </div>
-          <div id="blocos2"></div>
-        </div>
-      </div>
-    </div>
-    <div
-      id="simModal"
-      class="pb-modal pb-hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Simulador passo a passo"
-    >
-      <div class="pb-modal__backdrop" id="simClose"></div>
-      <div class="pb-modal__panel">
-        <div class="pb-modal__header">
-          <div class="pb-modal__title">Simulador passo a passo</div>
-          <button class="pb-modal__x" id="simCloseBtn" aria-label="Fechar">
-            ✕
-          </button>
-        </div>
+    <header class="top">
+      <img src="img/pascalblocks.png" alt="PascalBlocks" class="top__logo" />
+      <nav class="tabs" role="tablist" aria-label="Modo de edição">
+        <button class="tabs__btn tabs__btn--on" id="tabBlocks" role="tab" aria-selected="true" title="Programar com blocos">🧩 Blocos</button>
+        <button class="tabs__btn" id="tabCode" role="tab" aria-selected="false" title="Escrever o código Pascal à mão">⌨️ Código</button>
+      </nav>
 
-        <div class="pb-modal__controls">
-          <button id="simReset">Reiniciar</button>
-          <button id="simPrev">Anterior</button>
-          <button id="simNext">Próximo</button>
-          <button id="simPlay">▶</button>
-          <label class="pb-modal__speed">
-            Velocidade
-            <select id="simSpeed">
-              <option value="1200">Lento</option>
-              <option value="700" selected>Médio</option>
-              <option value="350">Rápido</option>
-            </select>
-          </label>
+      <div class="top__run">
+        <button class="btn btn--run" id="btnRun" title="Executar o programa (F5 ou Ctrl+Enter)">▶ Executar</button>
+        <button class="btn btn--step" id="btnStep" title="Executar passo a passo, vendo Console e Variáveis ao mesmo tempo (F10)">👣 Passo a passo</button>
+        <button class="btn btn--stop" id="btnStop" title="Parar a execução (Esc)" hidden>⏹ Parar</button>
+        <button class="status" id="status" title="Clique para ver os problemas do código">…</button>
+      </div>
+
+      <div class="top__right">
+        <button class="icon" id="btnUndo" title="Desfazer (Ctrl+Z)" aria-label="Desfazer">↶</button>
+        <button class="icon" id="btnRedo" title="Refazer (Ctrl+Y)" aria-label="Refazer">↷</button>
+        <button class="btn btn--ghost btn--danger-hover" id="btnClearAll" title="Limpar todos os blocos e começar do zero (Ctrl+Z desfaz)">🗑️ Limpar tudo</button>
+        <div class="menu">
+          <button class="btn btn--ghost" id="btnExamples" aria-haspopup="true">📚 Exemplos ▾</button>
+          <div class="menu__pop menu__pop--wide" id="menuExamples" hidden></div>
         </div>
-        <div class="pb-modal__grid">
-          <div class="pb-modal__col">
-            <div class="pb-modal__sectionTitle">Código</div>
-            <pre id="simCode" class="pb-modal__code"></pre>
-            <div class="pb-modal__hint">
-              Dica: o simulador executa os blocos em sequência. Nesta versão
-              (MVP), estruturas como IF/WHILE/FOR/REPEAT/CASE são exibidas e
-              avançam, mas ainda não controlam o fluxo.
-            </div>
-          </div>
-          <div class="pb-modal__col">
-            <div class="pb-modal__sectionTitle">Variáveis</div>
-            <pre id="simVars" class="pb-modal__vars"></pre>
-            <div class="pb-modal__sectionTitle">Saída (Writeln)</div>
-            <pre id="simOut" class="pb-modal__out"></pre>
+        <button class="btn btn--docs" id="btnDocs" title="Abrir Guia Completo, Blocos e Documentação das Funções do Pascal">📖 Guia &amp; Docs</button>
+        <div class="menu">
+          <button class="btn btn--ghost" id="btnFile" aria-haspopup="true">📁 Arquivo ▾</button>
+          <div class="menu__pop" id="menuFile" hidden>
+            <button data-act="clear">🗑️ Limpar tudo (programa em branco)</button>
+            <button data-act="new">📄 Programa inicial (modelo Olá)</button>
+            <button data-act="open">📂 Abrir arquivo (.pas / .pas_block)</button>
+            <hr />
+            <button data-act="save">💾 Salvar projeto (.pas_block)</button>
+            <button data-act="download">⬇️ Baixar código (.pas)</button>
+            <button data-act="copy">📋 Copiar código</button>
+            <button data-act="share">🔗 Copiar link para compartilhar</button>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      id="valModal"
-      class="pb-modal pb-hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Validação semântica"
-    >
-      <div class="pb-modal__backdrop" id="valClose"></div>
-      <div class="pb-modal__panel">
-        <div class="pb-modal__header">
-          <div class="pb-modal__title">Validação semântica</div>
-          <button class="pb-modal__x" id="valCloseBtn" aria-label="Fechar">
-            ✕
-          </button>
+      <input type="file" id="fileInput" accept=".pas,.pp,.lpr,.txt,.pas_block,.json,.xml" hidden />
+    </header>
+
+    <main class="main" id="main" data-mode="blocks">
+      <!-- Coluna esquerda -->
+      <aside class="side" id="side">
+        <div class="side__blocks">
+          <div id="palette" class="pal" aria-label="Blocos disponíveis"></div>
+          <div class="snip" id="snippets"></div>
         </div>
-        <div class="pb-modal__controls">
-          <button id="valRevalidar">Revalidar</button>
-          <button id="valCopiar">Copiar relatório</button>
-          <div class="pb-modal__speed" style="margin-left: auto">
-            <span id="valResumo"></span>
+        <div class="side__code" id="codeRef"></div>
+      </aside>
+
+      <!-- Centro -->
+      <section class="center">
+        <div class="banner" id="banner" hidden></div>
+        <div class="ex-guide" id="exampleGuide" hidden></div>
+        <div class="ws" id="workspace" aria-label="Área de montagem dos blocos"></div>
+        <div class="code-wrap" id="codeWrap">
+          <div class="code-bar">
+            <span class="code-bar__title">Editor Pascal</span>
+            <span class="code-bar__hint">Tab indenta · Ctrl+/ comenta · Ctrl+Enter executa</span>
+            <button class="btn btn--small" id="btnToBlocks" title="Converter este código em blocos">🧩 Converter em blocos</button>
           </div>
+          <div class="code-editor" id="codeEditor"></div>
         </div>
-        <div class="pb-modal__grid" style="grid-template-columns: 1fr">
-          <div class="pb-modal__col">
-            <div class="pb-modal__sectionTitle">Relatório</div>
-            <pre id="valReport" class="pb-modal__code"></pre>
-            <div class="pb-modal__hint">
-              A validação tenta identificar problemas comuns (ex.: begin/end, ;,
-              variáveis não declaradas). Pode haver falsos positivos em
-              programas mais avançados.
+        <div class="trash" data-trash title="Arraste um bloco aqui para excluir">🗑️ Solte aqui para excluir</div>
+      </section>
+
+      <div class="split" id="splitV" title="Arraste para redimensionar"></div>
+
+      <!-- Coluna direita -->
+      <aside class="right" id="right">
+        <section class="panel panel--preview" id="previewPanel">
+          <div class="panel__bar">
+            <span class="panel__title">Código Pascal gerado</span>
+            <button class="btn btn--small btn--ghost" id="btnCopyCode" title="Copiar código">📋 Copiar</button>
+            <button class="btn btn--small btn--ghost" id="btnEditCode" title="Abrir este código no editor de texto">✏️ Editar como texto</button>
+          </div>
+          <div class="preview" id="preview"></div>
+        </section>
+        <div class="split split--h" id="splitH" title="Arraste para redimensionar"></div>
+        <section class="panel panel--out">
+          <div class="panel__bar">
+            <div class="ptabs" role="tablist" aria-label="Painéis de saída e depuração">
+              <button class="ptabs__btn ptabs__btn--on" data-tab="split" title="Ver Console e Variáveis ao mesmo tempo">🖥️+📊 Console &amp; Variáveis</button>
+              <button class="ptabs__btn" data-tab="console" title="Ver apenas o Console">Console</button>
+              <button class="ptabs__btn" data-tab="vars" title="Ver apenas as Variáveis">Variáveis</button>
+              <button class="ptabs__btn" data-tab="problems" title="Ver erros e avisos de compilação">Problemas <span class="count" id="probCount"></span></button>
+            </div>
+            <div class="dbg" id="dbg" hidden>
+              <button class="btn btn--small" id="dbgNext" title="Executar a próxima linha (F10)">⏭ Próximo</button>
+              <button class="btn btn--small" id="dbgPlay" title="Avançar automaticamente">⏵ Auto</button>
+              <input type="range" id="dbgSpeed" min="0" max="100" value="60" title="Velocidade do passo automático" aria-label="Velocidade" />
+              <button class="btn btn--small" id="dbgFinish" title="Executar até o fim sem parar">⏩ Até o fim</button>
+            </div>
+            <button class="btn btn--small btn--ghost" id="btnClearConsole" title="Limpar console">🧹 Limpar</button>
+          </div>
+          <div class="pbody" id="outBody" data-view="split">
+            <div class="pbody__pane pbody__pane--console" data-pane="console">
+              <div class="subpane-hdr">
+                <span>🖥️ Console (Saída e Entrada)</span>
+                <span class="subpane-hdr__hint">readln / writeln</span>
+              </div>
+              <div class="subpane-content"><div id="terminal"></div></div>
+            </div>
+            <div class="pbody__pane pbody__pane--vars" data-pane="vars">
+              <div class="subpane-hdr">
+                <span>📊 Variáveis (Memória)</span>
+                <span class="subpane-hdr__hint" id="varsStatusHint">atualiza ao executar</span>
+              </div>
+              <div class="subpane-content"><div id="vars" class="vars"></div></div>
+            </div>
+            <div class="pbody__pane pbody__pane--problems" data-pane="problems">
+              <div class="subpane-hdr">
+                <span>⚠️ Problemas e Avisos do Compilador</span>
+                <span class="subpane-hdr__hint">clique em um item para ir até a linha/bloco</span>
+              </div>
+              <div class="subpane-content"><div id="problems" class="problems"></div></div>
             </div>
           </div>
+        </section>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Modal / Página Completa de Documentação e Guia Didático -->
+    <div class="modal modal--docs" id="docsModal" hidden>
+      <div class="modal__back" data-close-docs></div>
+      <div class="docs-dialog" role="dialog" aria-modal="true" aria-label="Guia e Documentação PascalBlocks">
+        <header class="docs-top">
+          <div class="docs-top__brand">
+            <span class="docs-top__icon">📖</span>
+            <div>
+              <h2 class="docs-top__title">Guia Didático &amp; Documentação Pascal</h2>
+              <p class="docs-top__sub">Tudo sobre os blocos, a linguagem Pascal, exemplos práticos e referência completa de funções</p>
+            </div>
+          </div>
+          <div class="docs-top__search">
+            <input type="search" id="docsSearch" placeholder="🔍 Buscar função, comando, bloco ou dúvida (ex: for, sqrt, mod, copy, array, cor)..." autocomplete="off" />
+          </div>
+          <button class="modal__x" data-close-docs aria-label="Fechar documentação" title="Fechar (Esc)">✕</button>
+        </header>
+        <div class="docs-layout">
+          <nav class="docs-nav" id="docsNav" aria-label="Seções da documentação"></nav>
+          <article class="docs-content" id="docsContent"></article>
         </div>
       </div>
     </div>
-    <script src="js/main.js" type="module"></script>
+
+    <script type="module" src="js/app.js"></script>
   </body>
 </html>
