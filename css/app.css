@@ -80,8 +80,18 @@ kbd {
 }
 .ico {
   display: inline-block;
-  vertical-align: -0.18em;
+  vertical-align: -0.22em;
   flex: none;
+}
+.btn .ico,
+.tabs__btn .ico,
+.ptabs__btn .ico,
+.status .ico,
+.menu__pop button .ico,
+.subpane-hdr__title .ico,
+.docs-nav__btn .ico,
+.ex-guide__title .ico {
+  transform: translateY(1px);
 }
 .tabs__btn {
   display: inline-flex;
@@ -407,6 +417,9 @@ body.is-resizing {
   margin-right: auto;
 }
 .ptabs__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   border: 0;
   background: none;
   padding: 6px 10px;
@@ -888,6 +901,9 @@ body.is-dragging * {
   padding-left: 8px;
 }
 .blk__tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   background: rgb(255 255 255 / 0.18);
   color: #fff;
@@ -911,6 +927,8 @@ body.is-dragging * {
   background: #ef4444;
 }
 .blk__badge {
+  display: inline-flex;
+  align-items: center;
   font-size: 14px;
   cursor: help;
 }
@@ -1572,6 +1590,9 @@ body.is-dragging * {
   position: absolute;
   top: 12px;
   right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   background: #f1f5f9;
   border-radius: 8px;
