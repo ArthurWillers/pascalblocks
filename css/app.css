@@ -78,7 +78,15 @@ kbd {
   padding: 3px;
   gap: 2px;
 }
+.ico {
+  display: inline-block;
+  vertical-align: -0.18em;
+  flex: none;
+}
 .tabs__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   border: 0;
   background: transparent;
   padding: 7px 14px;
@@ -104,6 +112,9 @@ kbd {
   gap: 6px;
 }
 .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   border: 1px solid transparent;
   border-radius: 8px;
   padding: 8px 14px;
@@ -162,6 +173,9 @@ kbd {
   border-radius: 6px;
 }
 .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 34px;
   height: 34px;
   border-radius: 8px;
@@ -176,6 +190,9 @@ kbd {
   cursor: default;
 }
 .status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   border: 0;
   border-radius: 999px;
   padding: 5px 12px;
@@ -236,7 +253,10 @@ kbd {
   white-space: normal;
 }
 .menu__pop button {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   width: 100%;
   text-align: left;
   border: 0;
@@ -472,6 +492,11 @@ body.is-resizing {
   font-weight: 700;
   color: #334155;
   flex: none;
+}
+.subpane-hdr__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .subpane-hdr__hint {
   font-weight: 500;
@@ -1327,7 +1352,7 @@ body.is-dragging * {
 }
 .pb-term--waiting::after,
 .pb-term--waitkey::after {
-  content: '⌨ aguardando entrada… digite e pressione Enter';
+  content: 'Aguardando entrada… digite e pressione Enter';
   display: block;
   margin-top: 6px;
   font-family: var(--sans);
@@ -1335,7 +1360,7 @@ body.is-dragging * {
   color: #94a3b8;
 }
 .pb-term--waitkey::after {
-  content: '⌨ pressione uma tecla…';
+  content: 'Pressione uma tecla…';
 }
 .pb-term__sys {
   font-family: var(--sans);
@@ -1593,14 +1618,23 @@ body.is-dragging * {
   opacity: 0.88;
 }
 .docs-top__search {
+  position: relative;
   margin-left: auto;
   flex: 1;
   max-width: 440px;
   min-width: 240px;
 }
+.docs-top__search-ico {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
 .docs-top__search input {
   width: 100%;
-  padding: 9px 14px;
+  padding: 9px 14px 9px 36px;
   border-radius: 999px;
   border: 0;
   font-size: 13.5px;
@@ -1860,12 +1894,10 @@ body.is-dragging * {
     --right-w: 360px;
   }
   .btn--step {
-    font-size: 0;
     padding: 8px 10px;
   }
-  .btn--step::before {
-    content: '👣';
-    font-size: 14px;
+  .btn--step .btn__label {
+    display: none;
   }
 }
 @media (max-width: 820px) {

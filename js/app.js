@@ -8,6 +8,7 @@ import { SNIPPETS, BLOCKS, CAT_COLOR } from './blocks/defs.js';
 import { CodeEditor } from './ui/codeEditor.js';
 import { Terminal } from './ui/terminal.js';
 import { escapeHtml } from './ui/highlight.js';
+import { icon } from './ui/icons.js';
 import { EXAMPLES } from './examples.js';
 import { STDLIB_DOCS, BLOCK_DOCS, COMMON_ERRORS_DOC, CRT_COLORS_DOC } from './docs.js';
 
@@ -160,7 +161,7 @@ function updateBanner() {
     b.append('O código foi editado à mão e não corresponde mais aos blocos. ');
     const btn = document.createElement('button');
     btn.className = 'btn btn--small';
-    btn.textContent = '↺ Recarregar código dos blocos';
+    btn.innerHTML = icon('undo', 13) + ' Recarregar código dos blocos';
     btn.onclick = () => {
       if (!confirm('Descartar as alterações feitas no código e recarregar a partir dos blocos?')) return;
       editor.value = state.gen.code;
@@ -175,7 +176,7 @@ function updateBanner() {
     b.append('Há um código editado à mão na aba Código que ainda não foi convertido em blocos. ');
     const btn = document.createElement('button');
     btn.className = 'btn btn--small';
-    btn.textContent = '🧩 Converter código em blocos';
+    btn.innerHTML = icon('puzzle', 13) + ' Converter código em blocos';
     btn.onclick = () => convertCodeToBlocks();
     b.appendChild(btn);
   } else b.hidden = true;
@@ -214,7 +215,7 @@ function convertCodeToBlocks(src = editor.value, { silent = false } = {}) {
   updateBanner();
   if (!silent) {
     setMode('blocks');
-    toast('Código convertido em blocos ✔', 'ok');
+    toast('Código convertido em blocos.', 'ok');
   }
   return true;
 }
@@ -273,8 +274,8 @@ function runCheck() {
       m.msgs.push(msg);
       marks.set(id, m);
     };
-    res.errors.forEach((e) => add(e.line, 'error', e.message + (e.hint ? '\n💡 ' + e.hint : '')));
-    res.warnings.forEach((w) => add(w.line, 'warn', w.message + (w.hint ? '\n💡 ' + w.hint : '')));
+    res.errors.forEach((e) => add(e.line, 'error', e.message + (e.hint ? '\nDica: ' + e.hint : '')));
+    res.warnings.forEach((w) => add(w.line, 'warn', w.message + (w.hint ? '\nDica: ' + w.hint : '')));
     blocks.setMarks(marks);
     const pm = new Map();
     res.errors.forEach((e) => pm.set(e.line, { cls: 'error', msg: e.message }));
@@ -288,13 +289,13 @@ function runCheck() {
   const st = $('status');
   if (res.errors.length) {
     st.className = 'status status--error';
-    st.textContent = `⛔ ${res.errors.length} erro${res.errors.length > 1 ? 's' : ''}`;
+    st.innerHTML = `${icon('error', 14)} ${res.errors.length} erro${res.errors.length > 1 ? 's' : ''}`;
   } else if (res.warnings.length) {
     st.className = 'status status--warn';
-    st.textContent = `⚠️ ${res.warnings.length} aviso${res.warnings.length > 1 ? 's' : ''}`;
+    st.innerHTML = `${icon('alert', 14)} ${res.warnings.length} aviso${res.warnings.length > 1 ? 's' : ''}`;
   } else {
     st.className = 'status status--ok';
-    st.textContent = '✔ Sem erros';
+    st.innerHTML = `${icon('checkCircle', 14)} Sem erros`;
   }
   return res;
 }
@@ -306,15 +307,15 @@ function renderProblems(res) {
   $('probCount').textContent = n ? String(n) : '';
   $('probCount').className = 'count' + (res.errors.length ? ' count--error' : n ? ' count--warn' : '');
   if (!n) {
-    el.innerHTML = '<div class="problems__ok">✔ Nenhum problema encontrado. O programa está pronto para executar.</div>';
+    el.innerHTML = `<div class="problems__ok">${icon('checkCircle', 16)} Nenhum problema encontrado. O programa está pronto para executar.</div>`;
     return;
   }
   const item = (p, cls) => {
     const div = document.createElement('button');
     div.className = 'prob prob--' + cls;
-    div.innerHTML = `<span class="prob__icon">${cls === 'error' ? '⛔' : '⚠️'}</span>
+    div.innerHTML = `<span class="prob__icon">${icon(cls === 'error' ? 'error' : 'alert', 15)}</span>
       <span class="prob__line">linha ${p.line}</span>
-      <span class="prob__msg">${escapeHtml(p.message)}${p.hint ? `<span class="prob__hint">💡 ${escapeHtml(p.hint)}</span>` : ''}</span>`;
+      <span class="prob__msg">${escapeHtml(p.message)}${p.hint ? `<span class="prob__hint">${icon('lightbulb', 13)} ${escapeHtml(p.hint)}</span>` : ''}</span>`;
     div.onclick = () => goToLine(p.line, p.col);
     el.appendChild(div);
   };
@@ -385,10 +386,10 @@ function renderVars(scopes, note = '') {
     if (hint) hint.textContent = decls.length ? `${decls.length} declarada(s) · aguardando execução` : 'nenhuma variável declarada';
     if (!decls.length) {
       el.innerHTML =
-        '<div class="vars__empty">Nenhuma variável declarada ainda.<br><small>Adicione um bloco <code>var</code> ou clique em 👣 <b>Passo a passo</b> para inspecionar a memória.</small></div>';
+        '<div class="vars__empty">Nenhuma variável declarada ainda.<br><small>Adicione um bloco <code>var</code> ou clique em <b>Passo a passo</b> para inspecionar a memória.</small></div>';
       return;
     }
-    let html = '<div class="vars__note">Variáveis declaradas (clique em ▶ <b>Executar</b> ou 👣 <b>Passo a passo</b> para ver os valores mudando):</div>';
+    let html = '<div class="vars__note">Variáveis declaradas (clique em <b>Executar</b> ou <b>Passo a passo</b> para ver os valores mudando):</div>';
     html += '<table class="vars__tbl"><tbody>';
     for (const v of decls) {
       html += `<tr><td class="vars__name">${escapeHtml(v.name)}</td><td class="vars__type">${escapeHtml(v.type)}</td><td class="vars__val vars__val--uninit">— (não iniciado)</td></tr>`;
@@ -401,7 +402,7 @@ function renderVars(scopes, note = '') {
   let html = note ? `<div class="vars__note">${escapeHtml(note)}</div>` : '';
   scopes.forEach((s, i) => {
     if (!s.vars.length) return;
-    html += `<div class="vars__scope">${i === 0 && scopes.length > 1 ? '📍 ' : ''}${escapeHtml(s.name === 'programa' ? 'Variáveis do programa' : s.name)}</div>`;
+    html += `<div class="vars__scope">${i === 0 && scopes.length > 1 ? icon('gitBranch', 13) + ' ' : ''}${escapeHtml(s.name === 'programa' ? 'Variáveis do programa' : s.name)}</div>`;
     html += '<table class="vars__tbl"><tbody>';
     for (const v of s.vars) {
       const prev = state.prevVars && state.prevVars.get(s.name + '.' + v.name);
@@ -434,12 +435,12 @@ function renderExampleGuide() {
   box.innerHTML = `
     <div class="ex-guide__head">
       <span class="ex-guide__badge">${escapeHtml(ex.level)}</span>
-      <span class="ex-guide__title">📘 Exemplo: ${escapeHtml(ex.title)}</span>
+      <span class="ex-guide__title">${icon('bookOpen', 15)} Exemplo: ${escapeHtml(ex.title)}</span>
       <div class="ex-guide__tags">${tagsHtml}</div>
       <div class="ex-guide__actions">
-        <button type="button" class="btn btn--small" data-ex-act="step" title="Executar este exemplo passo a passo vendo Console e Variáveis">👣 Testar Passo a passo</button>
-        <button type="button" class="btn btn--small btn--ghost" data-ex-act="toggle">${state.guideCollapsed ? '🔽 Mostrar explicação' : '🔼 Recolher'}</button>
-        <button type="button" class="btn btn--small btn--ghost" data-ex-act="close" title="Fechar explicação">✕</button>
+        <button type="button" class="btn btn--small" data-ex-act="step" title="Executar este exemplo passo a passo vendo Console e Variáveis">${icon('step', 13)} Testar Passo a passo</button>
+        <button type="button" class="btn btn--small btn--ghost" data-ex-act="toggle">${state.guideCollapsed ? icon('chevronDown', 13) + ' Mostrar explicação' : icon('chevronUp', 13) + ' Recolher'}</button>
+        <button type="button" class="btn btn--small btn--ghost" data-ex-act="close" title="Fechar explicação">${icon('x', 13)}</button>
       </div>
     </div>
     <div class="ex-guide__body">
@@ -448,8 +449,8 @@ function renderExampleGuide() {
         ${stepsHtml ? `<strong>Como funciona passo a passo:</strong><ol class="ex-guide__steps">${stepsHtml}</ol>` : ''}
       </div>
       <div class="ex-guide__side">
-        ${ex.tip ? `<div class="ex-guide__box ex-guide__box--tip">💡 <b>Dica do Pascal:</b> ${escapeHtml(ex.tip)}</div>` : ''}
-        ${ex.challenge ? `<div class="ex-guide__box ex-guide__box--chal">🚀 <b>Desafio para você:</b> ${escapeHtml(ex.challenge)}</div>` : ''}
+        ${ex.tip ? `<div class="ex-guide__box ex-guide__box--tip">${icon('lightbulb', 14)} <b>Dica do Pascal:</b> ${escapeHtml(ex.tip)}</div>` : ''}
+        ${ex.challenge ? `<div class="ex-guide__box ex-guide__box--chal">${icon('rocket', 14)} <b>Desafio para você:</b> ${escapeHtml(ex.challenge)}</div>` : ''}
       </div>
     </div>
   `;
@@ -504,7 +505,7 @@ function updateRunUI() {
   $('dbg').hidden = !(r && r.step);
   $('btnStep').disabled = !!r;
   document.body.classList.toggle('is-running', !!r);
-  $('dbgPlay').textContent = r && r.auto ? '⏸ Pausar' : '⏵ Auto';
+  $('dbgPlay').innerHTML = r && r.auto ? `${icon('pause', 13)} Pausar` : `${icon('play', 13)} Auto`;
 }
 
 async function run(step = false) {
@@ -516,7 +517,7 @@ async function run(step = false) {
   if (!res.ok) {
     ensureConsoleVisible();
     terminal.clear();
-    terminal.system('⛔ O programa tem erros e não pode ser executado:', 'error');
+    terminal.system('O programa tem erros e não pode ser executado:', 'error');
     for (const e of res.errors.slice(0, 8)) {
       const div = terminal.system('', 'errline');
       const a = document.createElement('a');
@@ -531,7 +532,7 @@ async function run(step = false) {
       if (e.hint) {
         const hint = document.createElement('div');
         hint.className = 'pb-term__hint';
-        hint.textContent = '💡 ' + e.hint;
+        hint.textContent = 'Dica: ' + e.hint;
         div.appendChild(hint);
       }
     }
@@ -563,26 +564,26 @@ async function run(step = false) {
   state.running = r;
   updateRunUI();
   if (step) {
-    terminal.system('👣 Modo passo a passo: use ⏭ Próximo (F10) para avançar e acompanhe o Console e as Variáveis ao mesmo tempo.', 'info');
+    terminal.system('Modo passo a passo: use Próximo (F10) para avançar e acompanhe o Console e as Variáveis ao mesmo tempo.', 'info');
   }
   const t0 = performance.now();
   const slowTimer = setTimeout(() => {
     if (state.running === r && !r.step && !terminal.pending && !terminal.keyPending) {
-      terminal.system('⏳ O programa está executando há algum tempo. Se estiver em um laço infinito, clique em ⏹ Parar (Esc).', 'warn');
+      terminal.system('O programa está executando há algum tempo. Se estiver em um laço infinito, clique em Parar (Esc).', 'warn');
     }
   }, 5000);
   try {
     const out = await interp.run();
     const secs = ((performance.now() - t0) / 1000).toFixed(2);
-    terminal.system(out.halted ? '■ Programa encerrado com halt.' : `✔ Programa finalizado em ${secs}s.`, 'ok');
+    terminal.system(out.halted ? 'Programa encerrado com halt.' : `Programa finalizado em ${secs}s.`, 'ok');
     renderVars(interp.snapshot(), 'Valores ao final da execução');
   } catch (e) {
     if (e instanceof StopSignal) {
-      terminal.system('⏹ Execução interrompida.', 'warn');
+      terminal.system('Execução interrompida.', 'warn');
       renderVars(interp.snapshot(), 'Valores quando foi interrompido');
     } else if (e instanceof PascalRuntimeError) {
       const div = terminal.system('', 'error');
-      div.append(`⛔ Erro de execução${e.code ? ` (${e.code})` : ''}: ${e.message}`);
+      div.append(`Erro de execução${e.code ? ` (${e.code})` : ''}: ${e.message}`);
       if (e.line) {
         const a = document.createElement('a');
         a.href = '#';
@@ -596,7 +597,7 @@ async function run(step = false) {
       if (e.hint) {
         const hint = document.createElement('div');
         hint.className = 'pb-term__hint';
-        hint.textContent = '💡 ' + e.hint;
+        hint.textContent = 'Dica: ' + e.hint;
         div.appendChild(hint);
       }
       renderVars(interp.snapshot(), `Valores no momento do erro (linha ${e.line})`);
@@ -806,7 +807,7 @@ function loadExample(ex) {
     terminal.clear();
     state.prevVars = null;
     renderVars(null);
-    toast(`📘 Exemplo "${ex.title}" carregado com guia explicativo!`, 'ok');
+    toast(`Exemplo "${ex.title}" carregado com guia explicativo!`, 'ok');
   }
 }
 
@@ -850,7 +851,7 @@ function clearAll() {
   terminal.clear();
   state.prevVars = null;
   renderVars(null);
-  toast('🗑️ Área de trabalho limpa! (Use Ctrl+Z para desfazer)', 'ok');
+  toast('Área de trabalho limpa! (Use Ctrl+Z para desfazer)', 'ok');
 }
 
 function newProgram() {
@@ -864,7 +865,7 @@ function newProgram() {
   terminal.clear();
   state.prevVars = null;
   renderVars(null);
-  toast('📄 Programa inicial carregado! (Use Ctrl+Z para desfazer)', 'ok');
+  toast('Programa inicial carregado! (Use Ctrl+Z para desfazer)', 'ok');
 }
 
 function starterProgram() {
@@ -1039,15 +1040,15 @@ async function load() {
 
 // ------------------------------------------------------------------ Guia & Documentação Completa
 const DOC_SECTIONS = [
-  { id: 'inicio', icon: '🚀', title: 'Como Usar o PascalBlocks' },
-  { id: 'blocos', icon: '🧩', title: 'Todos os Blocos Disponíveis' },
-  { id: 'estrutura', icon: '📘', title: 'Estrutura e Tipos em Pascal' },
-  { id: 'operadores', icon: '➕', title: 'Operadores e Expressões' },
-  { id: 'io', icon: '🖥️', title: 'Entrada, Saída e Formatação' },
-  { id: 'controle', icon: '🔀', title: 'Condicionais e Repetição' },
-  { id: 'subrotinas', icon: '🔧', title: 'Procedures, Functions e Vetores' },
-  { id: 'funcoes', icon: '📚', title: 'Funções Padrão (50+ Funções)' },
-  { id: 'erros', icon: '🩺', title: 'Erros Comuns (Como Resolver)' },
+  { id: 'inicio', icon: 'rocket', title: 'Como Usar o PascalBlocks' },
+  { id: 'blocos', icon: 'puzzle', title: 'Todos os Blocos Disponíveis' },
+  { id: 'estrutura', icon: 'bookOpen', title: 'Estrutura e Tipos em Pascal' },
+  { id: 'operadores', icon: 'sliders', title: 'Operadores e Expressões' },
+  { id: 'io', icon: 'terminal', title: 'Entrada, Saída e Formatação' },
+  { id: 'controle', icon: 'gitBranch', title: 'Condicionais e Repetição' },
+  { id: 'subrotinas', icon: 'wrench', title: 'Procedures, Functions e Vetores' },
+  { id: 'funcoes', icon: 'book', title: 'Funções Padrão (50+ Funções)' },
+  { id: 'erros', icon: 'heartPulse', title: 'Erros Comuns (Como Resolver)' },
 ];
 
 let activeDocSec = 'inicio';
@@ -1068,7 +1069,7 @@ function renderDocsNav() {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'docs-nav__btn' + (s.id === activeDocSec ? ' docs-nav__btn--on' : '');
-    b.innerHTML = `<span>${s.icon}</span><span>${escapeHtml(s.title)}</span>`;
+    b.innerHTML = `${icon(s.icon, 16)}<span>${escapeHtml(s.title)}</span>`;
     b.onclick = () => {
       activeDocSec = s.id;
       $('docsSearch').value = '';
@@ -1100,7 +1101,7 @@ function renderBlockCard(b) {
     <div class="doc-blk" style="--c:${color}">
       <div class="doc-blk__top">
         <strong style="font-size:14.5px;color:#0f172a;">${escapeHtml(b.title)}</strong>
-        <button type="button" class="btn btn--small" data-doc-add-block="${escapeHtml(b.type)}">➕ Inserir bloco no programa</button>
+        <button type="button" class="btn btn--small" data-doc-add-block="${escapeHtml(b.type)}">${icon('plus', 13)} Inserir bloco no programa</button>
       </div>
       <p style="margin:4px 0;"><b>Quando usar:</b> ${escapeHtml(b.when)}</p>
       <p style="margin:4px 0;color:#475569;font-size:12.5px;"><b>Campos:</b> ${escapeHtml(b.fields)}</p>
@@ -1134,20 +1135,20 @@ function renderDocsSearch(q) {
   const errs = COMMON_ERRORS_DOC.filter(
     (e) => e.title.toLowerCase().includes(term) || e.why.toLowerCase().includes(term) || e.right.toLowerCase().includes(term),
   );
-  let html = `<h3>🔍 Resultados da busca por "${escapeHtml(q)}"</h3>`;
+  let html = `<h3>${icon('search', 18)} Resultados da busca por "${escapeHtml(q)}"</h3>`;
   if (!fns.length && !blks.length && !errs.length) {
     html += `<p class="docs-lead">Nenhum item encontrado para "${escapeHtml(q)}". Tente buscar pelo nome da função (ex.: <code>sqrt</code>, <code>copy</code>, <code>mod</code>, <code>random</code>) ou estrutura (ex.: <code>for</code>, <code>if</code>, <code>array</code>).</p>`;
     c.innerHTML = html;
     return;
   }
   if (fns.length) {
-    html += `<h4>📚 Funções e Procedimentos (${fns.length})</h4>` + fns.map(renderFnCard).join('');
+    html += `<h4>${icon('book', 15)} Funções e Procedimentos (${fns.length})</h4>` + fns.map(renderFnCard).join('');
   }
   if (blks.length) {
-    html += `<h4>🧩 Blocos (${blks.length})</h4>` + blks.map(renderBlockCard).join('');
+    html += `<h4>${icon('puzzle', 15)} Blocos (${blks.length})</h4>` + blks.map(renderBlockCard).join('');
   }
   if (errs.length) {
-    html += `<h4>🩺 Dúvidas e Erros Comuns (${errs.length})</h4>`;
+    html += `<h4>${icon('heartPulse', 15)} Dúvidas e Erros Comuns (${errs.length})</h4>`;
     for (const e of errs) {
       html += `<div class="doc-card" style="margin-bottom:10px;"><h5>${escapeHtml(e.title)}</h5><p>${escapeHtml(e.why)}</p><pre class="doc-pre doc-pre--right">${escapeHtml(e.right)}</pre></div>`;
     }
@@ -1160,32 +1161,32 @@ function renderDocsSection(sec) {
   c.scrollTop = 0;
   if (sec === 'inicio') {
     c.innerHTML = `
-      <h3>🚀 Como Usar o PascalBlocks</h3>
+      <h3>${icon('rocket', 18)} Como Usar o PascalBlocks</h3>
       <p class="docs-lead">O PascalBlocks foi pensado para você aprender programação em Pascal de forma visual (com blocos que nunca erram a pontuação) e também escrevendo código real, tudo direto no navegador.</p>
       <div class="doc-grid">
         <div class="doc-card">
-          <h5>🧩 1. Montando com Blocos</h5>
+          <h5>${icon('puzzle', 15)} 1. Montando com Blocos</h5>
           <p>Clique em qualquer bloco na barra lateral esquerda para adicioná-lo ao programa ou <b>arraste-o</b> até a posição desejada. Blocos como <code>if</code>, <code>for</code>, <code>while</code> e <code>repeat</code> têm <b>encaixes internos</b>: arraste outros blocos para dentro deles!</p>
         </div>
         <div class="doc-card">
-          <h5>🖨️ 2. Escrevendo com writeln</h5>
+          <h5>${icon('printer', 15)} 2. Escrevendo com writeln</h5>
           <p>No bloco <code>writeln</code>, você combina quantas partes quiser clicando em <b>+ texto</b> (para frases fixas — sem precisar digitar apóstrofos!) e <b>+ valor</b> (para variáveis ou contas). No campinho <code>:fmt</code>, digite <code>0:2</code> para mostrar números reais com 2 casas decimais.</p>
         </div>
         <div class="doc-card">
-          <h5>👣 3. Console + Variáveis ao Mesmo Tempo</h5>
-          <p>No painel direito inferior, a visualização <b>🖥️+📊 Console &amp; Variáveis</b> mostra a saída do programa e a tabela de variáveis simultaneamente. Clique em <b>👣 Passo a passo (F10)</b> para executar uma linha por vez e ver cada variável mudar de valor (<code>anterior → novo</code>)!</p>
+          <h5>${icon('step', 15)} 3. Console + Variáveis ao Mesmo Tempo</h5>
+          <p>No painel direito inferior, a visualização <b>Console &amp; Variáveis</b> mostra a saída do programa e a tabela de variáveis simultaneamente. Clique em <b>Passo a passo (F10)</b> para executar uma linha por vez e ver cada variável mudar de valor (<code>anterior → novo</code>)!</p>
         </div>
         <div class="doc-card">
-          <h5>⌨️ 4. Modo Código ↔ Blocos</h5>
-          <p>Alterne para a aba <b>⌨️ Código</b> para escrever ou editar Pascal manualmente com destaque de sintaxe e verificação de erros ao vivo. Depois, clique em <b>🧩 Converter em blocos</b> para transformar seu código de volta em blocos visuais!</p>
+          <h5>${icon('code', 15)} 4. Modo Código ↔ Blocos</h5>
+          <p>Alterne para a aba <b>Código</b> para escrever ou editar Pascal manualmente com destaque de sintaxe e verificação de erros ao vivo. Depois, clique em <b>Converter em blocos</b> para transformar seu código de volta em blocos visuais!</p>
         </div>
       </div>
-      <h4>⌨️ Atalhos de Teclado Úteis</h4>
+      <h4>${icon('keyboard', 15)} Atalhos de Teclado Úteis</h4>
       <table class="doc-tbl">
         <thead><tr><th>Atalho</th><th>O que faz</th></tr></thead>
         <tbody>
           <tr><td><kbd>F5</kbd> ou <kbd>Ctrl</kbd>+<kbd>Enter</kbd></td><td>Executa o programa imediatamente</td></tr>
-          <tr><td><kbd>F10</kbd></td><td>Inicia o modo <b>👣 Passo a passo</b> (ou avança para a próxima linha)</td></tr>
+          <tr><td><kbd>F10</kbd></td><td>Inicia o modo <b>Passo a passo</b> (ou avança para a próxima linha)</td></tr>
           <tr><td><kbd>Esc</kbd></td><td>Para a execução atual (inclusive se houver um laço infinito)</td></tr>
           <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Desfazer / Refazer alterações nos blocos (inclusive após clicar em <b>Limpar tudo</b>)</td></tr>
           <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplica o bloco selecionado</td></tr>
@@ -1195,13 +1196,13 @@ function renderDocsSection(sec) {
     `;
   } else if (sec === 'blocos') {
     c.innerHTML = `
-      <h3>🧩 Todos os Blocos Disponíveis</h3>
-      <p class="docs-lead">Veja para que serve cada bloco da barra lateral, o que preencher em seus campos e o código Pascal exato que ele gera. Você pode clicar em <b>➕ Inserir bloco</b> para adicioná-lo direto ao seu programa!</p>
+      <h3>${icon('puzzle', 18)} Todos os Blocos Disponíveis</h3>
+      <p class="docs-lead">Veja para que serve cada bloco da barra lateral, o que preencher em seus campos e o código Pascal exato que ele gera. Você pode clicar em <b>Inserir bloco</b> para adicioná-lo direto ao seu programa!</p>
       ${BLOCK_DOCS.map(renderBlockCard).join('')}
     `;
   } else if (sec === 'estrutura') {
     c.innerHTML = `
-      <h3>📘 Estrutura de um Programa e Tipos de Dados em Pascal</h3>
+      <h3>${icon('bookOpen', 18)} Estrutura de um Programa e Tipos de Dados em Pascal</h3>
       <p class="docs-lead">Todo programa em Pascal segue uma organização clara dividida em cabeçalho, declarações e bloco principal.</p>
       <pre class="doc-pre">program NomeDoPrograma;
 uses crt;               { opcional: ativa comandos de tela e cores }
@@ -1222,10 +1223,10 @@ begin
 end.                    { o programa sempre termina com end. (com ponto final) }</pre>
 
       <div class="doc-callout">
-        💡 <b>Dica:</b> Pascal <b>não diferencia maiúsculas de minúsculas</b> nos nomes de comandos e variáveis: <code>Writeln</code>, <code>WRITELN</code> e <code>writeln</code> são exatamente a mesma coisa!
+        ${icon('lightbulb', 14)} <b>Dica:</b> Pascal <b>não diferencia maiúsculas de minúsculas</b> nos nomes de comandos e variáveis: <code>Writeln</code>, <code>WRITELN</code> e <code>writeln</code> são exatamente a mesma coisa!
       </div>
 
-      <h4>📦 Tipos de Dados Disponíveis</h4>
+      <h4>${icon('box', 15)} Tipos de Dados Disponíveis</h4>
       <table class="doc-tbl">
         <thead><tr><th>Tipo</th><th>O que guarda</th><th>Exemplos de valores</th><th>Exemplo de declaração</th></tr></thead>
         <tbody>
@@ -1242,7 +1243,7 @@ end.                    { o programa sempre termina com end. (com ponto final) }
     `;
   } else if (sec === 'operadores') {
     c.innerHTML = `
-      <h3>➕ Operadores Aritméticos, Relacionais e Lógicos</h3>
+      <h3>${icon('sliders', 18)} Operadores Aritméticos, Relacionais e Lógicos</h3>
       <p class="docs-lead">Conheça os símbolos usados para fazer cálculos e montar condições em Pascal.</p>
 
       <h4>1. Operadores Aritméticos (Cálculos)</h4>
@@ -1283,12 +1284,12 @@ end.                    { o programa sempre termina com end. (com ponto final) }
         </tbody>
       </table>
       <div class="doc-callout doc-callout--warn">
-        ⚠️ <b>Regra de Ouro do Pascal:</b> Ao combinar comparações com <code>and</code> ou <code>or</code>, <b>SEMPRE coloque parênteses em cada comparação</b>: escreva <code>(x &gt; 0) and (y &gt; 0)</code>, e nunca <code>x &gt; 0 and y &gt; 0</code>!
+        ${icon('alert', 14)} <b>Regra de Ouro do Pascal:</b> Ao combinar comparações com <code>and</code> ou <code>or</code>, <b>SEMPRE coloque parênteses em cada comparação</b>: escreva <code>(x &gt; 0) and (y &gt; 0)</code>, e nunca <code>x &gt; 0 and y &gt; 0</code>!
       </div>
     `;
   } else if (sec === 'io') {
     c.innerHTML = `
-      <h3>🖥️ Entrada, Saída e Formatação (write, writeln, readln)</h3>
+      <h3>${icon('terminal', 18)} Entrada, Saída e Formatação (write, writeln, readln)</h3>
       <p class="docs-lead">Como conversar com o usuário pelo Console e formatar números perfeitamente.</p>
 
       <h4>1. Mostrando informações: <code>write</code> vs <code>writeln</code></h4>
@@ -1324,7 +1325,7 @@ end.</pre>
     `;
   } else if (sec === 'controle') {
     c.innerHTML = `
-      <h3>🔀 Estruturas Condicionais e Laços de Repetição</h3>
+      <h3>${icon('gitBranch', 18)} Estruturas Condicionais e Laços de Repetição</h3>
       <p class="docs-lead">Como fazer o programa tomar decisões e repetir tarefas automaticamente.</p>
 
       <h4>1. Decisões com <code>if ... then ... else</code> e <code>case ... of</code></h4>
@@ -1381,7 +1382,7 @@ end;</pre>
     `;
   } else if (sec === 'subrotinas') {
     c.innerHTML = `
-      <h3>🔧 Procedimentos, Funções e Vetores</h3>
+      <h3>${icon('wrench', 18)} Procedimentos, Funções e Vetores</h3>
       <p class="docs-lead">Organize programas maiores dividindo o problema em sub-rotinas reutilizáveis e listas de dados.</p>
 
       <h4>1. Diferença entre <code>procedure</code> e <code>function</code></h4>
@@ -1443,16 +1444,16 @@ end.</pre>
     `,
     ).join('');
     c.innerHTML = `
-      <h3>📚 Catálogo Completo de Funções e Procedimentos Padrão</h3>
+      <h3>${icon('book', 18)} Catálogo Completo de Funções e Procedimentos Padrão</h3>
       <p class="docs-lead">Todas as ${STDLIB_DOCS.length} funções e procedimentos nativos disponíveis no compilador PascalBlocks. Clique em uma categoria abaixo ou use a barra de busca no topo.</p>
       <div class="doc-fn-filter">${chipsHtml}</div>
       ${list.map(renderFnCard).join('')}
-      <h4>🎨 Tabela das 16 Cores da Unit CRT (para <code>textcolor</code> e <code>textbackground</code>)</h4>
+      <h4>${icon('palette', 15)} Tabela das 16 Cores da Unit CRT (para <code>textcolor</code> e <code>textbackground</code>)</h4>
       <div class="crt-grid">${colorsHtml}</div>
     `;
   } else if (sec === 'erros') {
     c.innerHTML = `
-      <h3>🩺 Guia de Erros Comuns em Pascal (E Como Resolver)</h3>
+      <h3>${icon('heartPulse', 18)} Guia de Erros Comuns em Pascal (E Como Resolver)</h3>
       <p class="docs-lead">Está recebendo uma mensagem de erro? Veja os tropeços mais comuns de quem está aprendendo Pascal e compare o jeito errado com o jeito certo.</p>
       ${COMMON_ERRORS_DOC.map(
         (e) => `
@@ -1461,11 +1462,11 @@ end.</pre>
           <p>${escapeHtml(e.why)}</p>
           <div class="doc-grid" style="margin:6px 0 0;">
             <div>
-              <strong style="color:#991b1b;font-size:12px;">❌ Como NÃO escrever:</strong>
+              <strong style="color:#991b1b;font-size:12px;">${icon('x', 13)} Como NÃO escrever:</strong>
               <pre class="doc-pre doc-pre--wrong">${escapeHtml(e.wrong)}</pre>
             </div>
             <div>
-              <strong style="color:#166534;font-size:12px;">✔ Como escrever CERTO:</strong>
+              <strong style="color:#166534;font-size:12px;">${icon('check', 13)} Como escrever CERTO:</strong>
               <pre class="doc-pre doc-pre--right">${escapeHtml(e.right)}</pre>
             </div>
           </div>
@@ -1599,7 +1600,7 @@ buildExamplesMenu();
 renderVars(null);
 updateRunUI();
 load().then(() => {
-  terminal.system('Bem-vindo ao PascalBlocks! Monte seu programa e clique em ▶ Executar ou 👣 Passo a passo.', 'info');
+  terminal.system('Bem-vindo ao PascalBlocks! Monte seu programa e clique em Executar ou Passo a passo.', 'info');
 });
 
 // expõe para depuração no console do navegador

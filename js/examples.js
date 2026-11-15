@@ -184,7 +184,7 @@ end.
       'O laço "for i := 1 to 10 do" repete o "writeln" 10 vezes, fazendo "i" valer 1, 2, 3... até 10.',
       'Em cada volta, multiplica "n * i" e usa ":2" e ":3" na formatação para alinhar os números em colunas.',
     ],
-    tip: 'Execute este exemplo no modo "👣 Passo a passo" e observe no painel de Variáveis o valor de "i" subindo de 1 até 10!',
+    tip: 'Execute este exemplo no modo "Passo a passo" e observe no painel de Variáveis o valor de "i" subindo de 1 até 10!',
     challenge: 'Altere o limite final do "for" de 10 para 20, ou mude "to" para "downto" (de 10 até 1) para ver a tabuada de trás para frente.',
     code: `program Tabuada;
 var
@@ -441,7 +441,7 @@ end.
       'No programa principal, atribui "x := 10" e "y := 20", chama "troca(x, y)" e mostra que os valores foram trocados.',
     ],
     tip: 'Se você remover a palavra "var" de "procedure troca(var a, b: integer)", o procedimento só alterará cópias locais e "x" e "y" continuarão valendo 10 e 20!',
-    challenge: 'Rode no modo "👣 Passo a passo" para ver o escopo do procedimento "troca" aparecer na tabela de Variáveis.',
+    challenge: 'Rode no modo "Passo a passo" para ver o escopo do procedimento "troca" aparecer na tabela de Variáveis.',
     code: `program TrocaValores;
 var
   x, y: integer;

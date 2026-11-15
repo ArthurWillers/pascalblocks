@@ -12,37 +12,91 @@
     <header class="top">
       <img src="img/pascalblocks.png" alt="PascalBlocks" class="top__logo" />
       <nav class="tabs" role="tablist" aria-label="Modo de edição">
-        <button class="tabs__btn tabs__btn--on" id="tabBlocks" role="tab" aria-selected="true" title="Programar com blocos">🧩 Blocos</button>
-        <button class="tabs__btn" id="tabCode" role="tab" aria-selected="false" title="Escrever o código Pascal à mão">⌨️ Código</button>
+        <button class="tabs__btn tabs__btn--on" id="tabBlocks" role="tab" aria-selected="true" title="Programar com blocos">
+          <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg>
+          Blocos
+        </button>
+        <button class="tabs__btn" id="tabCode" role="tab" aria-selected="false" title="Escrever o código Pascal à mão">
+          <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Código
+        </button>
       </nav>
 
       <div class="top__run">
-        <button class="btn btn--run" id="btnRun" title="Executar o programa (F5 ou Ctrl+Enter)">▶ Executar</button>
-        <button class="btn btn--step" id="btnStep" title="Executar passo a passo, vendo Console e Variáveis ao mesmo tempo (F10)">👣 Passo a passo</button>
-        <button class="btn btn--stop" id="btnStop" title="Parar a execução (Esc)" hidden>⏹ Parar</button>
+        <button class="btn btn--run" id="btnRun" title="Executar o programa (F5 ou Ctrl+Enter)">
+          <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          Executar
+        </button>
+        <button class="btn btn--step" id="btnStep" title="Executar passo a passo, vendo Console e Variáveis ao mesmo tempo (F10)">
+          <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/></svg>
+          <span class="btn__label">Passo a passo</span>
+        </button>
+        <button class="btn btn--stop" id="btnStop" title="Parar a execução (Esc)" hidden>
+          <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="5" y="5" rx="2"/></svg>
+          Parar
+        </button>
         <button class="status" id="status" title="Clique para ver os problemas do código">…</button>
       </div>
 
       <div class="top__right">
-        <button class="icon" id="btnUndo" title="Desfazer (Ctrl+Z)" aria-label="Desfazer">↶</button>
-        <button class="icon" id="btnRedo" title="Refazer (Ctrl+Y)" aria-label="Refazer">↷</button>
-        <button class="btn btn--ghost btn--danger-hover" id="btnClearAll" title="Limpar todos os blocos e começar do zero (Ctrl+Z desfaz)">🗑️ Limpar tudo</button>
+        <button class="icon" id="btnUndo" title="Desfazer (Ctrl+Z)" aria-label="Desfazer">
+          <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+        </button>
+        <button class="icon" id="btnRedo" title="Refazer (Ctrl+Y)" aria-label="Refazer">
+          <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+        </button>
+        <button class="btn btn--ghost btn--danger-hover" id="btnClearAll" title="Limpar todos os blocos e começar do zero (Ctrl+Z desfaz)">
+          <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+          Limpar tudo
+        </button>
         <div class="menu">
-          <button class="btn btn--ghost" id="btnExamples" aria-haspopup="true">📚 Exemplos ▾</button>
+          <button class="btn btn--ghost" id="btnExamples" aria-haspopup="true">
+            <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+            Exemplos
+            <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
           <div class="menu__pop menu__pop--wide" id="menuExamples" hidden></div>
         </div>
-        <button class="btn btn--docs" id="btnDocs" title="Abrir Guia Completo, Blocos e Documentação das Funções do Pascal">📖 Guia &amp; Docs</button>
+        <button class="btn btn--docs" id="btnDocs" title="Abrir Guia Completo, Blocos e Documentação das Funções do Pascal">
+          <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Guia &amp; Docs
+        </button>
         <div class="menu">
-          <button class="btn btn--ghost" id="btnFile" aria-haspopup="true">📁 Arquivo ▾</button>
+          <button class="btn btn--ghost" id="btnFile" aria-haspopup="true">
+            <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            Arquivo
+            <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
           <div class="menu__pop" id="menuFile" hidden>
-            <button data-act="clear">🗑️ Limpar tudo (programa em branco)</button>
-            <button data-act="new">📄 Programa inicial (modelo Olá)</button>
-            <button data-act="open">📂 Abrir arquivo (.pas / .pas_block)</button>
+            <button data-act="clear">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+              Limpar tudo (programa em branco)
+            </button>
+            <button data-act="new">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+              Programa inicial (modelo Olá)
+            </button>
+            <button data-act="open">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg>
+              Abrir arquivo (.pas / .pas_block)
+            </button>
             <hr />
-            <button data-act="save">💾 Salvar projeto (.pas_block)</button>
-            <button data-act="download">⬇️ Baixar código (.pas)</button>
-            <button data-act="copy">📋 Copiar código</button>
-            <button data-act="share">🔗 Copiar link para compartilhar</button>
+            <button data-act="save">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>
+              Salvar projeto (.pas_block)
+            </button>
+            <button data-act="download">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              Baixar código (.pas)
+            </button>
+            <button data-act="copy">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copiar código
+            </button>
+            <button data-act="share">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              Copiar link para compartilhar
+            </button>
           </div>
         </div>
       </div>
@@ -68,11 +122,17 @@
           <div class="code-bar">
             <span class="code-bar__title">Editor Pascal</span>
             <span class="code-bar__hint">Tab indenta · Ctrl+/ comenta · Ctrl+Enter executa</span>
-            <button class="btn btn--small" id="btnToBlocks" title="Converter este código em blocos">🧩 Converter em blocos</button>
+            <button class="btn btn--small" id="btnToBlocks" title="Converter este código em blocos">
+              <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg>
+              Converter em blocos
+            </button>
           </div>
           <div class="code-editor" id="codeEditor"></div>
         </div>
-        <div class="trash" data-trash title="Arraste um bloco aqui para excluir">🗑️ Solte aqui para excluir</div>
+        <div class="trash" data-trash title="Arraste um bloco aqui para excluir">
+          <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+          Solte aqui para excluir
+        </div>
       </section>
 
       <div class="split" id="splitV" title="Arraste para redimensionar"></div>
@@ -82,8 +142,14 @@
         <section class="panel panel--preview" id="previewPanel">
           <div class="panel__bar">
             <span class="panel__title">Código Pascal gerado</span>
-            <button class="btn btn--small btn--ghost" id="btnCopyCode" title="Copiar código">📋 Copiar</button>
-            <button class="btn btn--small btn--ghost" id="btnEditCode" title="Abrir este código no editor de texto">✏️ Editar como texto</button>
+            <button class="btn btn--small btn--ghost" id="btnCopyCode" title="Copiar código">
+              <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copiar
+            </button>
+            <button class="btn btn--small btn--ghost" id="btnEditCode" title="Abrir este código no editor de texto">
+              <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              Editar como texto
+            </button>
           </div>
           <div class="preview" id="preview"></div>
         </section>
@@ -91,37 +157,61 @@
         <section class="panel panel--out">
           <div class="panel__bar">
             <div class="ptabs" role="tablist" aria-label="Painéis de saída e depuração">
-              <button class="ptabs__btn ptabs__btn--on" data-tab="split" title="Ver Console e Variáveis ao mesmo tempo">🖥️+📊 Console &amp; Variáveis</button>
+              <button class="ptabs__btn ptabs__btn--on" data-tab="split" title="Ver Console e Variáveis ao mesmo tempo">
+                <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 12h18"/></svg>
+                Console &amp; Variáveis
+              </button>
               <button class="ptabs__btn" data-tab="console" title="Ver apenas o Console">Console</button>
               <button class="ptabs__btn" data-tab="vars" title="Ver apenas as Variáveis">Variáveis</button>
               <button class="ptabs__btn" data-tab="problems" title="Ver erros e avisos de compilação">Problemas <span class="count" id="probCount"></span></button>
             </div>
             <div class="dbg" id="dbg" hidden>
-              <button class="btn btn--small" id="dbgNext" title="Executar a próxima linha (F10)">⏭ Próximo</button>
-              <button class="btn btn--small" id="dbgPlay" title="Avançar automaticamente">⏵ Auto</button>
+              <button class="btn btn--small" id="dbgNext" title="Executar a próxima linha (F10)">
+                <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></svg>
+                Próximo
+              </button>
+              <button class="btn btn--small" id="dbgPlay" title="Avançar automaticamente">
+                <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                Auto
+              </button>
               <input type="range" id="dbgSpeed" min="0" max="100" value="60" title="Velocidade do passo automático" aria-label="Velocidade" />
-              <button class="btn btn--small" id="dbgFinish" title="Executar até o fim sem parar">⏩ Até o fim</button>
+              <button class="btn btn--small" id="dbgFinish" title="Executar até o fim sem parar">
+                <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>
+                Até o fim
+              </button>
             </div>
-            <button class="btn btn--small btn--ghost" id="btnClearConsole" title="Limpar console">🧹 Limpar</button>
+            <button class="btn btn--small btn--ghost" id="btnClearConsole" title="Limpar console">
+              <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+              Limpar
+            </button>
           </div>
           <div class="pbody" id="outBody" data-view="split">
             <div class="pbody__pane pbody__pane--console" data-pane="console">
               <div class="subpane-hdr">
-                <span>🖥️ Console (Saída e Entrada)</span>
+                <span class="subpane-hdr__title">
+                  <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+                  Console (Saída e Entrada)
+                </span>
                 <span class="subpane-hdr__hint">readln / writeln</span>
               </div>
               <div class="subpane-content"><div id="terminal"></div></div>
             </div>
             <div class="pbody__pane pbody__pane--vars" data-pane="vars">
               <div class="subpane-hdr">
-                <span>📊 Variáveis (Memória)</span>
+                <span class="subpane-hdr__title">
+                  <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>
+                  Variáveis (Memória)
+                </span>
                 <span class="subpane-hdr__hint" id="varsStatusHint">atualiza ao executar</span>
               </div>
               <div class="subpane-content"><div id="vars" class="vars"></div></div>
             </div>
             <div class="pbody__pane pbody__pane--problems" data-pane="problems">
               <div class="subpane-hdr">
-                <span>⚠️ Problemas e Avisos do Compilador</span>
+                <span class="subpane-hdr__title">
+                  <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                  Problemas e Avisos do Compilador
+                </span>
                 <span class="subpane-hdr__hint">clique em um item para ir até a linha/bloco</span>
               </div>
               <div class="subpane-content"><div id="problems" class="problems"></div></div>
@@ -139,16 +229,21 @@
       <div class="docs-dialog" role="dialog" aria-modal="true" aria-label="Guia e Documentação PascalBlocks">
         <header class="docs-top">
           <div class="docs-top__brand">
-            <span class="docs-top__icon">📖</span>
+            <span class="docs-top__icon">
+              <svg class="ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </span>
             <div>
               <h2 class="docs-top__title">Guia Didático &amp; Documentação Pascal</h2>
               <p class="docs-top__sub">Tudo sobre os blocos, a linguagem Pascal, exemplos práticos e referência completa de funções</p>
             </div>
           </div>
           <div class="docs-top__search">
-            <input type="search" id="docsSearch" placeholder="🔍 Buscar função, comando, bloco ou dúvida (ex: for, sqrt, mod, copy, array, cor)..." autocomplete="off" />
+            <svg class="ico docs-top__search-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="search" id="docsSearch" placeholder="Buscar função, comando, bloco ou dúvida (ex: for, sqrt, mod, copy, array, cor)..." autocomplete="off" />
           </div>
-          <button class="modal__x" data-close-docs aria-label="Fechar documentação" title="Fechar (Esc)">✕</button>
+          <button class="modal__x" data-close-docs aria-label="Fechar documentação" title="Fechar (Esc)">
+            <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
         </header>
         <div class="docs-layout">
           <nav class="docs-nav" id="docsNav" aria-label="Seções da documentação"></nav>

@@ -4,6 +4,7 @@ import {
   createBlock, cloneBlock, findBlock, removeBlock, walk, slotAccepts,
 } from './model.js';
 import { parseExpression, parseProgram, KEYWORDS } from '../pascal/index.js';
+import { icon } from '../ui/icons.js';
 
 const INTERACTIVE = 'input, select, textarea, button, label, .part__kind';
 
@@ -254,12 +255,14 @@ export class BlockEditor {
         const tools = h('span', 'blk__tools');
         const err = h('span', 'blk__badge');
         tools.appendChild(err);
-        const dup = h('button', 'blk__tool', '⧉');
+        const dup = h('button', 'blk__tool');
         dup.type = 'button';
+        dup.innerHTML = icon('copy', 12);
         dup.title = 'Duplicar (Ctrl+D)';
         dup.dataset.act = 'dup';
-        const del = h('button', 'blk__tool blk__tool--del', '✕');
+        const del = h('button', 'blk__tool blk__tool--del');
         del.type = 'button';
+        del.innerHTML = icon('x', 12);
         del.title = 'Excluir (Delete)';
         del.dataset.act = 'del';
         tools.appendChild(dup);
@@ -488,7 +491,7 @@ export class BlockEditor {
       el.classList.remove('blk--error', 'blk--warn');
       const badge = el.querySelector(':scope > .blk__head .blk__badge');
       if (badge) {
-        badge.textContent = '';
+        badge.innerHTML = '';
         badge.title = '';
       }
     }
@@ -498,7 +501,7 @@ export class BlockEditor {
       el.classList.add(m.cls === 'error' ? 'blk--error' : 'blk--warn');
       const badge = el.querySelector(':scope > .blk__head .blk__badge');
       if (badge) {
-        badge.textContent = m.cls === 'error' ? '⛔' : '⚠️';
+        badge.innerHTML = m.cls === 'error' ? icon('error', 14) : icon('alert', 14);
         badge.title = m.msgs.join('\n\n');
       }
     }
